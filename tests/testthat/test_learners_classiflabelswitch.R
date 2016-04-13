@@ -51,6 +51,8 @@ test_that("no labels are switched", {
     names(lrns) = lids
     toremove = grepl("classif.mock", lids)
     toremove = toremove | grepl("classif.LiblineaRMultiClass", lids)
+    ## reenable labelswitch test for classif.randomForestSRCSyn (#831)
+    toremove = toremove | grepl("classif.randomForestSRCSyn", lids)
     lrns = lrns[!toremove]
 
     vnapply(lrns, function(lrn) {
