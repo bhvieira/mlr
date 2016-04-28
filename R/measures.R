@@ -344,6 +344,24 @@ multiclass.auc = makeMeasure(id = "multiclass.auc", minimize = FALSE, best = 1, 
   }
 )
 
+#' @export logloss
+#' @rdname measures
+#' @format none
+logloss = makeMeasure(id = "logloss", minimize = TRUE, best = 0, worst = Inf,
+  properties = c("classif", "classif.multi", "req.truth", "req.prob"),
+  name = "Logarithmic loss",
+  note = "Evaluates Logarithmic Loss in multiclass and binary tasks.",
+  fun = function(task, model, pred, feats, extra.args) {
+    truth = pred$data$truth
+    probs = getPredictionProbabilities(pred)
+    eps = 1e-15;
+    probs[probs>1-eps]=1-eps
+    probs[probs<eps]=eps
+    truth.model = model.matrix(~.-1, data = as.data.frame(truth))
+    -1*mean(log(probs[(truth.model-probs)>0]))
+  }
+)
+
 ###############################################################################
 ### classif binary ###
 ###############################################################################
