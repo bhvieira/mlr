@@ -1,4 +1,7 @@
 mlr_2.9:
+- removeConstantFeatures now also operates on data.frames and
+  makeRemoveConstantFeaturesWrapper can be used to augment a learner with this
+  preprocessing step.
 - SMOTEWrapper: fix a bug where "sw.nn" was not correctly passed down
 - classif.blackboost, regr.blackboost: made sure that arg "stump" is passed on
   correctly
@@ -22,16 +25,27 @@ mlr_2.9:
   argument renaming to fix potential name clashes
 - fix small bug in DownsampleWrapper when trained with weights
 - the "penalized" learner were restructured and improved (params were added), also see below.
+- makeCostMeasure: removed arg "task", names of cost matrix are checked on measure calculation
+-- fixed weight handling and weight tag for some learners
+- rename generatePartialPrediction, plotPartialPrediction, and plotPartialPredictionGGVIS to
+  generatePartialDependence, plotPartialDependence, and plotPartialDependenceGGVIS
+- add stability.nugget parameter for "regr.km"
+- plotPartialDependence can plot classification tasks with more than one interacted features now
+- generateFilterValuesData: added argument 'more.args'
 
 - new learners
--- surv.cv.CoxBoost
--- regr.penalized.fusedlasso
--- classif.penalized.ridge
--- classif.penalized.lasso
+-- classif.C50
+-- classif.gausspr
 -- classif.penalized.fusedlasso
--- surv.penalized.ridge
--- surv.penalized.lasso
+-- classif.penalized.lasso
+-- classif.penalized.ridge
+-- regr.penalized.fusedlasso
+-- regr.gausspr
+-- regr.glm
+-- surv.cv.CoxBoost
 -- surv.penalized.fusedlasso
+-- surv.penalized.lasso
+-- surv.penalized.ridge
 
 - removed learners
 -- surv.optimCoxBoostPenalty
@@ -39,6 +53,9 @@ mlr_2.9:
 
 - removed functions
 -- getParamSet generic (now in ParamHelpers package)
+
+- new measures
+-- measureBrier (for mutliclass problems)
 
 mlr_2.8:
 - Feature filter "univariate" had a bad name, was deprecated and is now called
