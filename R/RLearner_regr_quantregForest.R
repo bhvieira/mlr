@@ -23,7 +23,7 @@ makeRLearner.regr.quantregForest = function() {
       makeIntegerLearnerParam(id = "nthreads", default = 1L, lower = 1L)
     ),
     properties = c("numerics", "factors", "ordered", "se"),
-    name = "Random Forest",
+    name = "Quantile Regression Forests",
     short.name = "qrf",
     note = "qrf offers all functionalities from rf. See `?regr.randomForest` for information about se estimation. Note that the qrf can freeze the R process if trained on a task with 1 feature which is constant. This can happen in feature forward selection, also due to resampling, and you need to remove such features with removeConstantFeatures."
   )
@@ -33,7 +33,6 @@ makeRLearner.regr.quantregForest = function() {
 trainLearner.regr.quantregForest = function(.learner, .task, .subset, .weights = NULL, ...) {
   data = getTaskData(.task, .subset, target.extra = TRUE)
   m = quantregForest::quantregForest(x = data[["data"]], y = data[["target"]], ...)
-
   return(m)
 }
 
